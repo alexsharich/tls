@@ -21,15 +21,15 @@ function App() {
     }
 
     const addTask = (title: string) => {
-       /*  const newTask:  TaskType = {
-            id: v1(),
-            title: title,
-            isDone: false
-        }
-        const copyTask = [...tasks]
-        copyTask.push(newTask)
-        setTasks(copyTask) */
-        setTasks([{id:v1(),title,isDone:false},...tasks])
+        /*  const newTask:  TaskType = {
+             id: v1(),
+             title: title,
+             isDone: false
+         }
+         const copyTask = [...tasks]
+         copyTask.push(newTask)
+         setTasks(copyTask) */
+        setTasks([{ id: v1(), title, isDone: false }, ...tasks])
     }
 
     let [filter, setFilter] = useState<FilterValuesType>('all');
@@ -48,14 +48,24 @@ function App() {
         setFilter(value);
     }
 
+    function changeStatus(id: string, isDone: boolean) {
+        let task = tasks.find(t => t.id === id);
+        if (task) {
+            task.isDone = isDone
+            setTasks([...tasks])
+        }
+    }
+
     return (
         <div className="App">
             <TodoList title='What to learn ?'
                 tasks={tasksForTodolist}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
-                addTask={addTask} 
-                />
+                addTask={addTask}
+                filter={filter}
+                changeStatus={changeStatus}
+            />
         </div>
     );
 }
